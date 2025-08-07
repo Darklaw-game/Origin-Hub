@@ -1246,7 +1246,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Namele
 		end)
 	end
 	HubsSection:NewButton("FE Trolling GUI", "FE Scripts and more.", function()--
-		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/FE%20Trolling%20GUI.luau'), true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Darklaw-game/Origin-Hub/refs/heads/main/Trolling-GUI",true))()
 	end)
 	HubsSection:NewButton("Sirius", "cool asl", function()--
 		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Sirius/Sirius.txt'), true))()
