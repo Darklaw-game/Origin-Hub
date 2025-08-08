@@ -26,7 +26,7 @@ local function sendToWebhook(message)
     }
     local response = HttpService:RequestAsync(options)
     if response.StatusCode == 204 then
-        print("Message sent successfully!")
+        local WarframeShitidk = true
     else
         warn("Failed to send message. HTTP code: " .. response.StatusCode)
         warn("Response: " .. response.Body)
