@@ -33,10 +33,7 @@ local function sendToWebhook(message)
     end
 end
 
--- Get the player's username and send the "ran script" message.
-local player = game.Players.LocalPlayer
-local playerUsername = player.Name
-sendToWebhook(playerUsername .. " Has ran Sky Hub")
+
 
 -- Load the 'Nex' script for various functions.
 local Nex = loadstring(game:HttpGet("https://pastefy.app/IRNCydXd/raw",true))()
