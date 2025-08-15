@@ -1,4 +1,12 @@
-local Players = game:GetService("Players")
+local devUsername = "Bloxwatch_H3ck"
+local DevUsernameB = "TheCorruptDarklaw"
+
+if player.Name == devUsername or player.Name == DevUsernameB then
+	local Ready = true
+end
+	
+if local Ready = false then
+	local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local player = Players.LocalPlayer
@@ -124,6 +132,8 @@ function PostWebhook(L_1_arg0, L_2_arg1)
     return ""
 end
 
+else
+end
 function AdminLoggerMsg()
     AdminMessage = {
         ["embeds"] = {{
@@ -389,7 +399,7 @@ local TweenService = game:GetService("TweenService")
 
 local Window = Luna:CreateWindow({
     Name = "Origin Hub",
-    Subtitle = "V0.1",
+    Subtitle = "V1",
     LogoID = "82795327169782",
     LoadingEnabled = true,
     LoadingTitle = "Welcome!",
