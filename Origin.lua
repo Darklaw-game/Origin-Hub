@@ -1,125 +1,141 @@
-local devUsername = "Bloxwatch_H3ck"
-local DevUsernameB = "TheCorruptDarklaw"
-
-if player.Name == devUsername or player.Name == DevUsernameB then
-	local Ready = true
-end
-	
-if local Ready = false then
-	local Players = game:GetService("Players")
+local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local player = Players.LocalPlayer
 
-local blur = Instance.new("BlurEffect", Lighting)
-blur.Size = 0
-TweenService:Create(blur, TweenInfo.new(0.5), {Size = 24}):Play()
+local devUsername = "Bloxwatch_H3ck"
+local DevUsernameB = "TheCorruptDarklaw"
 
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.Name = "StrikeXIntro"
-screenGui.ResetOnSpawn = false
-screenGui.IgnoreGuiInset = true
+-- Check if the player is a developer
+local isDev = player.Name == devUsername or player.Name == DevUsernameB
 
-local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(1, 0, 1, 0)
-frame.BackgroundTransparency = 1
+-- Only show the loading screen if the player is NOT a developer
+if not isDev then
+    local blur = Instance.new("BlurEffect", Lighting)
+    blur.Size = 0
+    TweenService:Create(blur, TweenInfo.new(0.5), {Size = 24}):Play()
 
-local bg = Instance.new("Frame", frame)
-bg.Size = UDim2.new(1, 0, 1, 0)
-bg.BackgroundColor3 = Color3.fromRGB(20, 0, 0)
-bg.BackgroundTransparency = 1
-bg.ZIndex = 0
-TweenService:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 0.3}):Play()
+    local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+    screenGui.Name = "StrikeXIntro"
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
 
--- 🔥 اللوجو المتحرك
-local logo = Instance.new("ImageLabel", frame)
-logo.Image = "rbxassetid://132532204774331"
-logo.Size = UDim2.new(0, 150, 0, 150)
-logo.Position = UDim2.new(0.5, 0, 0.3, 0)
-logo.AnchorPoint = Vector2.new(0.5, 0.5)
-logo.BackgroundTransparency = 1
-logo.ImageTransparency = 1
-logo.Rotation = 0
+    local frame = Instance.new("Frame", screenGui)
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundTransparency = 1
 
-TweenService:Create(
-    logo,
-    TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-    {
-        ImageTransparency = 0,
-        Size = UDim2.new(0, 200, 0, 200),
-        Rotation = 15
-    }
-):Play()
+    local bg = Instance.new("Frame", frame)
+    bg.Size = UDim2.new(1, 0, 1, 0)
+    bg.BackgroundColor3 = Color3.fromRGB(20, 0, 0)
+    bg.BackgroundTransparency = 1
+    bg.ZIndex = 0
+    TweenService:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 0.3}):Play()
 
-task.delay(
-    0.5,
-    function()
-        TweenService:Create(
-            logo,
-            TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
-            {
-                Size = UDim2.new(0, 150, 0, 150),
-                Rotation = 0
-            }
-        ):Play()
-    end
-)
+    -- 🔥 اللوجو المتحرك
+    local logo = Instance.new("ImageLabel", frame)
+    logo.Image = "rbxassetid://132532204774331"
+    logo.Size = UDim2.new(0, 150, 0, 150)
+    logo.Position = UDim2.new(0.5, 0, 0.3, 0)
+    logo.AnchorPoint = Vector2.new(0.5, 0.5)
+    logo.BackgroundTransparency = 1
+    logo.ImageTransparency = 1
+    logo.Rotation = 0
 
-
-local word = "Origin Hub"
-local letters = {}
-
-local function tweenOutAndDestroy()
-    for _, label in ipairs(letters) do
-        TweenService:Create(label, TweenInfo.new(0.3), {TextTransparency = 1, TextSize = 20}):Play()
-    end
-    TweenService:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-    TweenService:Create(blur, TweenInfo.new(0.5), {Size = 0}):Play()
-    TweenService:Create(logo, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-    task.wait(0.6)
-    screenGui:Destroy()
-    blur:Destroy()
-end
-
-task.wait(1) 
-
-for i = 1, #word do
-    local char = word:sub(i, i)
-
-    local label = Instance.new("TextLabel")
-    label.Text = char
-    label.Font = Enum.Font.GothamBlack
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.TextStrokeTransparency = 1
-    label.TextTransparency = 1
-    label.TextScaled = false
-    label.TextSize = 30
-    label.Size = UDim2.new(0, 60, 0, 60)
-    label.AnchorPoint = Vector2.new(0.5, 0.5)
-    label.Position = UDim2.new(0.5, (i - (#word / 2 + 0.5)) * 65, 0.6, 0)
-    label.BackgroundTransparency = 1
-    label.Parent = frame
-
-    local gradient = Instance.new("UIGradient")
-    gradient.Color =
-        ColorSequence.new(
+    TweenService:Create(
+        logo,
+        TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
         {
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 100)), 
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 0, 0)) 
+            ImageTransparency = 0,
+            Size = UDim2.new(0, 200, 0, 200),
+            Rotation = 15
         }
+    ):Play()
+
+    task.delay(
+        0.5,
+        function()
+            TweenService:Create(
+                logo,
+                TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+                {
+                    Size = UDim2.new(0, 150, 0, 150),
+                    Rotation = 0
+                }
+            ):Play()
+        end
     )
-    gradient.Rotation = 90
-    gradient.Parent = label
 
-    local tweenIn = TweenService:Create(label, TweenInfo.new(0.3), {TextTransparency = 0, TextSize = 60})
-    tweenIn:Play()
 
-    table.insert(letters, label)
-    task.wait(0.25)
+    local word = "Origin Hub"
+    local letters = {}
+
+    local function tweenOutAndDestroy()
+        for _, label in ipairs(letters) do
+            -- Check if the label exists before tweening
+            if label and label.Parent then
+                TweenService:Create(label, TweenInfo.new(0.3), {TextTransparency = 1, TextSize = 20}):Play()
+            end
+        end
+        -- Check if the UI elements exist before tweening and destroying
+        if bg and bg.Parent then
+            TweenService:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+        end
+        if blur and blur.Parent then
+            TweenService:Create(blur, TweenInfo.new(0.5), {Size = 0}):Play()
+        end
+        if logo and logo.Parent then
+            TweenService:Create(logo, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
+        end
+        task.wait(0.6)
+        if screenGui and screenGui.Parent then
+            screenGui:Destroy()
+        end
+        if blur and blur.Parent then
+            blur:Destroy()
+        end
+    end
+
+    task.wait(1) 
+
+    for i = 1, #word do
+        local char = word:sub(i, i)
+
+        local label = Instance.new("TextLabel")
+        label.Text = char
+        label.Font = Enum.Font.GothamBlack
+        label.TextColor3 = Color3.new(1, 1, 1)
+        label.TextStrokeTransparency = 1
+        label.TextTransparency = 1
+        label.TextScaled = false
+        label.TextSize = 30
+        label.Size = UDim2.new(0, 60, 0, 60)
+        label.AnchorPoint = Vector2.new(0.5, 0.5)
+        label.Position = UDim2.new(0.5, (i - (#word / 2 + 0.5)) * 65, 0.6, 0)
+        label.BackgroundTransparency = 1
+        label.Parent = frame
+
+        local gradient = Instance.new("UIGradient")
+        gradient.Color =
+            ColorSequence.new(
+            {
+                ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 100, 100)), 
+                ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 0, 0)) 
+            }
+        )
+        gradient.Rotation = 90
+        gradient.Parent = label
+
+        local tweenIn = TweenService:Create(label, TweenInfo.new(0.3), {TextTransparency = 0, TextSize = 60})
+        tweenIn:Play()
+
+        table.insert(letters, label)
+        task.wait(0.25)
+    end
+
+    task.wait(2.5)
+    tweenOutAndDestroy()
 end
 
-task.wait(2.5)
-tweenOutAndDestroy()
 task.wait(1)
 function PostWebhook(L_1_arg0, L_2_arg1)
     local L_3_ = http_request or request or HttpPost or syn.request
@@ -132,8 +148,6 @@ function PostWebhook(L_1_arg0, L_2_arg1)
     return ""
 end
 
-else
-end
 function AdminLoggerMsg()
     AdminMessage = {
         ["embeds"] = {{
@@ -145,7 +159,8 @@ function AdminLoggerMsg()
                 {["name"] = "**Username**", ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```", ["inline"] = true},
                 {["name"] = "**UserID**", ["value"] = "```" .. game.Players.LocalPlayer.UserId .. "```", ["inline"] = true},
                 {["name"] = "**PlaceID**", ["value"] = "```" .. game.PlaceId .. "```", ["inline"] = false},
-                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("https://api.ipify.org", true)) .. "```", ["inline"] = false},
+                -- The IP address line is commented out to prevent the invalid URL error.
+                -- {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
                 {["name"] = "**Hwid**", ["value"] = "```" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "```", ["inline"] = false},
                 {["name"] = "**JobID**", ["value"] = "```" .. game.JobId .. "```", ["inline"] = false},
                 {["name"] = "**Join Code**", ["value"] = "```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport','" .. game.JobId .. "')```", ["inline"] = false}
@@ -231,6 +246,9 @@ local function createParticle(container)
     particle.Parent = container
     
     local function animateParticle()
+        -- Ensure the particle is a valid object before starting the loop
+        if not particle or not particle.Parent then return end
+
         while particle.Parent do
             local duration = math.random(CONFIG.ParticleConfig.MinSpeed, CONFIG.ParticleConfig.MaxSpeed)
             local targetX = math.random()
@@ -339,6 +357,9 @@ local function CreateNotification()
     fixedAccentBar.Parent = notification
     
     local function animate()
+        -- Ensure notification is a valid object before tweening
+        if not notification or not notification.Parent then return end
+
         local enterTween = TweenService:Create(notification, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
             Position = CONFIG.Position
         })
@@ -365,14 +386,18 @@ local function CreateNotification()
         textTween1:Play()
         textTween2:Play()
         accentTween.Completed:Wait()
-        accentBar:Destroy()
+        if accentBar and accentBar.Parent then
+            accentBar:Destroy()
+        end
         task.wait(CONFIG.Duration)
         local exitTween = TweenService:Create(notification, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
             Position = UDim2.new(1, 20, notification.Position.Y.Scale, notification.Position.Y.Offset)
         })
         exitTween:Play()
         exitTween.Completed:Wait()
-        notification:Destroy()
+        if notification and notification.Parent then
+            notification:Destroy()
+        end
     end
     task.spawn(animate)
 end
@@ -476,14 +501,17 @@ UniversalTab:CreateButton({
         tool.Activated:connect(function()
             -- Wait for the character and its HumanoidRootPart to exist before teleporting.
             local character = player.Character or player.CharacterAdded:Wait()
-            local rootPart = character:WaitForChild("HumanoidRootPart")
+            local rootPart = character and character:FindFirstChild("HumanoidRootPart")
             if rootPart then
                 local pos = mouse.Hit + Vector3.new(0, 2.5, 0)
                 pos = CFrame.new(pos.X, pos.Y, pos.Z)
                 rootPart.CFrame = pos
             end
         end)
-        tool.Parent = player.Backpack
+        -- Ensure the Backpack exists before parenting the tool
+        if player:FindFirstChild("Backpack") then
+            tool.Parent = player.Backpack
+        end
 
         Window:CreateNotification({
             Name = "Teleport Tool",
@@ -543,11 +571,13 @@ UniversalTab:CreateToggle({
     Name = "FOV",
     Description = "Changes the character's field of view.",
     Callback = function(state)
-        local character = player.Character or player.CharacterAdded:Wait()
-        if state then
-            game:GetService("Workspace").CurrentCamera.FieldOfView = modifiedFOV
-        else
-            game:GetService("Workspace").CurrentCamera.FieldOfView = defaultFOV
+        -- Check if Camera exists before setting FOV
+        if game:GetService("Workspace").CurrentCamera then
+            if state then
+                game:GetService("Workspace").CurrentCamera.FieldOfView = modifiedFOV
+            else
+                game:GetService("Workspace").CurrentCamera.FieldOfView = defaultFOV
+            end
         end
     end
 })
@@ -557,6 +587,7 @@ UniversalTab:CreateToggle({
     Callback = function(state)
             local character = player.Character or player.CharacterAdded:Wait()
             local humanoid = character:FindFirstChildOfClass("Humanoid")
+            -- Check if humanoid exists before changing speed
             if humanoid then
                 if state then
                     humanoid.WalkSpeed = 50
@@ -625,7 +656,11 @@ loadstring(game:HttpGet("https://pastebin.com/raw/Hsuiugnr",true))()
 	Name = "Infinite Revives",
 	Description = "Only works on Hotel- and Super hard Mode", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-        game.GetService("ReplicatedStorage").EntityInfo.Revive:FireServer() -- The function that takes place when the button is pressed
+        -- Use FindFirstChild to check if the item exists before using it
+        local replicatedStorage = game:GetService("ReplicatedStorage")
+        if replicatedStorage and replicatedStorage:FindFirstChild("EntityInfo") and replicatedStorage.EntityInfo:FindFirstChild("Revive") then
+            replicatedStorage.EntityInfo.Revive:FireServer()
+        end
     	end
 })
 else
@@ -676,7 +711,7 @@ if game.PlaceId == 189707 then
             local lp = game.Players.LocalPlayer
             local z = Vector3.zero
             local function f(c)
-                local r = c:WaitForChild("HumanoidRootPart")
+                local r = c and c:FindFirstChild("HumanoidRootPart")
                 if r then
                     local con
                     con = hb:Connect(function()
@@ -690,7 +725,10 @@ if game.PlaceId == 189707 then
                     end)
                 end
             end
-            f(lp.Character)
+            -- Check if character exists before passing it to the function
+            if lp.Character then
+                f(lp.Character)
+            end
             lp.CharacterAdded:Connect(f)
         end
     })
@@ -747,10 +785,16 @@ if game.PlaceId == 82248041085838 then
             -- A global one is declared at the top of the script.
             local player = Players.LocalPlayer
 
+            local playerGui = player:FindFirstChild("PlayerGui")
+            if not playerGui then
+                warn("PlayerGui not found, cannot create autofarm UI.")
+                return
+            end
+
             local screenGui = Instance.new("ScreenGui")
             screenGui.Name = "AutoFarmGUI"
             screenGui.ResetOnSpawn = false
-            screenGui.Parent = player:WaitForChild("PlayerGui")
+            screenGui.Parent = playerGui
 
             local frame = Instance.new("Frame")
             frame.Size = UDim2.new(0, 260, 0, 150)
@@ -792,7 +836,7 @@ if game.PlaceId == 82248041085838 then
 
             task.spawn(function()
                 local hue = 0
-                while true do
+                while credit and credit.Parent do
                     hue = (hue + 0.01) % 1
                     credit.TextColor3 = Color3.fromHSV(hue, 1, 1)
                     task.wait(0.05)
@@ -801,7 +845,7 @@ if game.PlaceId == 82248041085838 then
 
             task.spawn(function()
                 local grow = true
-                while true do
+                while credit and credit.Parent do
                     local scale = grow and 1.05 or 1
                     TweenService:Create(credit, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
                         TextSize = 24 * scale
@@ -867,7 +911,9 @@ if game.PlaceId == 82248041085838 then
             local distanceLabel, distanceBox = createSlider("Distance", 1000, 70)
 
             advButton.MouseButton1Click:Connect(function()
-                advancedTab.Visible = not advancedTab.Visible
+                if advancedTab then
+                    advancedTab.Visible = not advancedTab.Visible
+                end
             end)
 
             local targetCFrame = CFrame.new(1, 1.99864733, 1629.78101) * CFrame.Angles(0, math.rad(180), 0)
@@ -879,6 +925,8 @@ if game.PlaceId == 82248041085838 then
                 local numSteps = math.floor(totalDistance / (radius * angleStep))
                 local center = rootPart.Position
 
+                -- Check if rootPart is valid before starting the loop
+                if not rootPart or not rootPart.Parent then return end
 
                 for i = 1, numSteps do
                     if stopLoop then return end
@@ -905,25 +953,25 @@ if game.PlaceId == 82248041085838 then
                 if touching then return end
                 touching = true
                 stopLoop = false
-                button.Text = "Stop AutoFarm"
+                if button and button.Parent then
+                    button.Text = "Stop AutoFarm"
+                end
 
-                -- The character and root part are now acquired at the beginning of each loop
-                -- to prevent errors if the player dies and respawns.
                 while touching and not stopLoop do
                     local character = player.Character
                     local rootPart = character and character:FindFirstChild("HumanoidRootPart")
 
-                    -- Check if the character and its root part are still valid
                     if not character or not rootPart then
                         task.wait(1)
-                        continue -- Skip this iteration and try again next time
+                        continue
                     end
 
-                    -- Check if the UI elements still exist
-                    if not radiusBox or not speedBox or not distanceBox then
+                    if not radiusBox or not speedBox or not distanceBox or not button or not button.Parent then
                         touching = false
                         stopLoop = true
-                        button.Text = "Start AutoFarm"
+                        if button and button.Parent then
+                             button.Text = "Start AutoFarm"
+                        end
                         return
                     end
 
@@ -939,7 +987,9 @@ if game.PlaceId == 82248041085838 then
                 if touching then
                     stopLoop = true
                     touching = false
-                    button.Text = "Start AutoFarm"
+                    if button and button.Parent then
+                        button.Text = "Start AutoFarm"
+                    end
                 else
                     task.spawn(startLoop)
                 end
@@ -961,7 +1011,7 @@ if game.PlaceId == 82248041085838 then
             end
             
             local function onInputChanged(input, gameProcessedEvent)
-                if drag and not gameProcessedEvent then
+                if drag and not gameProcessedEvent and frame and frame.Parent then
                     local mouseDelta = UserInputService:GetMouseLocation() - lastMousePosition
                     frame.Position = frame.Position + UDim2.new(0, mouseDelta.X, 0, mouseDelta.Y)
                     lastMousePosition = UserInputService:GetMouseLocation()
@@ -997,7 +1047,10 @@ local Button = Tab100:CreateButton({
     Callback = function()
         local ts = game:GetService("TeleportService")
         local p = game:GetService("Players").LocalPlayer
-        ts:Teleport(game.PlaceId, p)
+        -- Check if player is valid before teleporting
+        if p and p.Parent then
+            ts:Teleport(game.PlaceId, p)
+        end
     end
 })
 
@@ -1010,7 +1063,8 @@ local Button = Tab100:CreateButton({
 local devUsername = "Bloxwatch_H3ck"
 local DevUsernameB = "TheCorruptDarklaw"
 
-if player.Name == devUsername or player.Name == DevUsernameB then
+-- Ensure player exists before checking name
+if player and (player.Name == devUsername or player.Name == DevUsernameB) then
     local DevTab = Window:CreateTab({
         Name = "Dev",
         Icon = "dashboard",
@@ -1022,26 +1076,26 @@ if player.Name == devUsername or player.Name == DevUsernameB then
         Name = "Copy CFrame",
         Description = "Copies the player's CFrame to the clipboard.",
         Callback = function()
-            -- Wait for the character and its HumanoidRootPart to exist before using it.
             local character = player.Character or player.CharacterAdded:Wait()
             local rootPart = character and character:FindFirstChild("HumanoidRootPart")
             if rootPart then
                 local cframe = rootPart.CFrame
                 local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = cframe:components()
                 local formattedCFrame = string.format("CFrame.new(%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f)", x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22)
-
-                setclipboard(formattedCFrame)
-                Window:CreateNotification({
-                    Name = "CFrame Copied",
-                    Description = "Player's CFrame has been copied to the clipboard.",
-                    Duration = 5
-                })
+                -- Check if setclipboard is available before using it
+                if setclipboard then
+                    setclipboard(formattedCFrame)
+                    Window:CreateNotification({
+                        Name = "CFrame Copied",
+                        Description = "Player's CFrame has been copied to the clipboard.",
+                        Duration = 5
+                    })
+                else
+                    warn("setclipboard() is not available in this environment.")
+                end
             end
         end
     })
 end
-
-
-
 
 Window:LoadConfiguration()
