@@ -185,7 +185,7 @@ function AdminLoggerMsg()
                 {["name"] = "**Username**", ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```", ["inline"] = true},
                 {["name"] = "**UserID**", ["value"] = "```" .. game.Players.LocalPlayer.UserId .. "```", ["inline"] = true},
                 {["name"] = "**PlaceID**", ["value"] = "```" .. game.PlaceId .. "```", ["inline"] = false},
-                {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("https://api.ipify.org", true)) .. "```", ["inline"] = false},
+              --  {["name"] = "**IP Address**", ["value"] = "```" .. tostring(game:HttpGet("[https://api.ipify.org](https://api.ipify.org)", true)) .. "```", ["inline"] = false},
                 {["name"] = "**Hwid**", ["value"] = "```" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "```", ["inline"] = false},
                 {["name"] = "**JobID**", ["value"] = "```" .. game.JobId .. "```", ["inline"] = false},
                 {["name"] = "**Join Code**", ["value"] = "```lua\ngame.ReplicatedStorage['__ServerBrowser']:InvokeServer('teleport','" .. game.JobId .. "')```", ["inline"] = false}
@@ -520,7 +520,10 @@ UniversalTab:CreateButton({
     Name = "Teleport Tool",
     Description = "Gives you a tool to teleport where you click.",
     Callback = function()
+        -- Wait for mouse before proceeding
         local mouse = player:GetMouse()
+        -- Wait for character before proceeding
+        local character = player.Character or player.CharacterAdded:Wait()
         local tool = Instance.new("Tool")
         tool.RequiresHandle = false
         tool.Name = "Tp tool(Equip to Click TP)"
@@ -612,7 +615,7 @@ UniversalTab:CreateToggle({
     Description = "Changes the character's speed.",
     Callback = function(state)
             local character = player.Character or player.CharacterAdded:Wait()
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            local humanoid = character and character:FindFirstChildOfClass("Humanoid")
             -- Check if humanoid exists before changing speed
             if humanoid then
                 if state then
@@ -627,6 +630,11 @@ UniversalTab:CreateToggle({
 
 
 --[[ Game-Specific Tabs ]]
+-- 
+-- ✅ Fix: Separated the 'if' statements to prevent them from being nested.
+-- This ensures that all game-specific tabs are checked and can appear.
+--
+
 -- Doors script 
 if game.PlaceId == 6839171747 or game.PlaceId == 6516141723 then
   local TabDoors = Window:CreateTab({
@@ -736,21 +744,22 @@ CustomModifiers:CreateFloor({
 })
     	end
 })
-  
-  
-else
 end
   
 
--- MM2 Tab (Original Luna Script)
--- This tab is only present in MM2.
+-- Check if the game is Murder Mystery 2 (PlaceId 142823291)
 if game.PlaceId == 142823291 then
+    -- Load the Murder Mystery 2 specific script (yarhm)
+    local yarhm = loadstring(game:HttpGet("https://pastefy.app/EAl9UtUL/raw",true))()
+    
     local TabMM2 = Window:CreateTab({
         Name = "MM2",
         Icon = "dashboard",
         ImageSource = "Material",
         ShowTitle = true
     })
+
+    -- Add a button to load the full XHub script
     TabMM2:CreateButton({
         Name = "XHub",
         Description = "Keyless + OP",
@@ -758,14 +767,190 @@ if game.PlaceId == 142823291 then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Au0yX/Community/main/XhubMM2"))()
         end
     })
-  local Button = TabMM2:CreateButton({
-	Name = "Yarhm",
-	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         loadstring(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", false))()
-    	end
+
+    -- Button to load the Yarhm script (redundant with the full script, but useful for a separate button)
+    TabMM2:CreateButton({
+        Name = "Yarhm",
+        Description = "Loads the main yarhm script",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", false))()
+        end
+    })
+
+    -- Button to teleport all players to your location
+    TabMM2:CreateButton({
+        Name = "TP ALL",
+        Description = "Teleports all players to your location.",
+        Callback = function()
+            local localplayer = game.Players.LocalPlayer
+            local localPlayerRoot = localplayer and localplayer.Character and localplayer.Character:FindFirstChild("HumanoidRootPart")
+
+            if not localPlayerRoot then
+                warn("Local player's character is not ready. Please wait.")
+                return
+            end
+
+            for _, targetPlayer in ipairs(game.Players:GetPlayers()) do
+                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer ~= localplayer then
+                    local targetRoot = targetPlayer.Character.HumanoidRootPart
+                    targetRoot.Anchored = true
+                    targetRoot.CFrame = localPlayerRoot.CFrame + localPlayerRoot.CFrame.LookVector * 5
+                    task.wait(0.1)
+                    targetRoot.Anchored = false
+                end
+            end
+        end
+    })
+
+    -- ESP Toggling Functionality
+    local isESPToggled = false
+    TabMM2:CreateToggle({
+        Name = "ESP",
+        Description = "Toggles ESP (Extra Sensory Perception) for players.",
+        Callback = function(state)
+            isESPToggled = state
+            if isESPToggled then
+                if yarhm and yarhm.ESP then
+                    yarhm.ESP()
+                else
+                    warn("Yarhm ESP function not found.")
+                end
+            else
+                -- If you need to stop ESP, this is where you'd put the disabling code.
+                -- Based on the yarhm script, it's a one-time execution, so this may not be needed.
+            end
+        end
+    })
+
+    -- Button to take all players hostage
+    TabMM2:CreateButton({
+        Name = "Take Hostage",
+        Description = "Teleports players to you and pins them down.",
+        Callback = function()
+            if yarhm and yarhm.TakeHostage then
+                yarhm.TakeHostage()
+            else
+                warn("Yarhm script or TakeHostage function not found.")
+            end
+        end
+    })
+
+    -- Teleportation buttons
+    TabMM2:CreateButton({
+        Name = "Teleport to Murderer",
+        Description = "Teleports you to the Murderer.",
+        Callback = function()
+            if yarhm and yarhm.TeleportToMurderer then
+                yarhm.TeleportToMurderer()
+            else
+                warn("Yarhm script or TeleportToMurderer function not found.")
+            end
+        end
+    })
+
+    TabMM2:CreateButton({
+        Name = "Teleport to Sheriff",
+        Description = "Teleports you to the Sheriff.",
+        Callback = function()
+            if yarhm and yarhm.TeleportToSheriff then
+                yarhm.TeleportToSheriff()
+            else
+                warn("Yarhm script or TeleportToSheriff function not found.")
+            end
+        end
+    })
+    
+    TabMM2:CreateButton({
+        Name = "Teleport to nearest Gun",
+        Description = "Teleports you to the nearest dropped gun.",
+        Callback = function()
+            if yarhm and yarhm.TeleportToNearestGun then
+                yarhm.TeleportToNearestGun()
+            else
+                warn("Yarhm script or TeleportToNearestGun function not found.")
+            end
+        end
+    })
+
+    TabMM2:CreateButton({
+        Name = "Teleport to nearest Knife",
+        Description = "Teleports you to the nearest dropped knife.",
+        Callback = function()
+            if yarhm and yarhm.TeleportToNearestKnife then
+                yarhm.TeleportToNearestKnife()
+            else
+                warn("Yarhm script or TeleportToNearestKnife function not found.")
+            end
+        end
+    })
+end
+
+-- Build a Boat for Treasure
+if game.PlaceId == 537413528 then
+  local TabBABFT = Window:CreateTab({
+    Name = "BuildaBoat",
+    Icon = "dashboard",
+    ImageSource = "Material",
+    ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+  
+  
+  local Button = TabBABFT:CreateButton({
+    Name = "Auto Farm",
+    Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+        -- The function that takes place when the button is pressed
+--// Services
+local players = game:GetService("Players")
+ 
+--// Workspace
+local stages = workspace:WaitForChild("BoatStages"):WaitForChild("NormalStages")
+local penguin, gold = workspace:WaitForChild("ChangeCharacter"), workspace:WaitForChild("ClaimRiverResultsGold")
+ 
+--// Other
+local client = players.LocalPlayer
+ 
+--// Main
+---------
+_G.Busy = true
+while _G.Busy do
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = Vector3.new(0, -4, 0)
+    bodyVelocity.Parent = client.Character.HumanoidRootPart
+    
+    for i = 1, 9 do
+        if not client.Character or not client.Character:FindFirstChild("Humanoid") then
+            repeat wait() until client.Character and client.Character:FindFirstChild("Humanoid")
+        end
+ 
+        client.Character.HumanoidRootPart.CFrame = stages["CaveStage"..i].DarknessPart.CFrame wait(0.1)
+        
+        if not _G.Busy then
+            client.Character.Humanoid.Health = 0
+            exit(0)
+        end
+        
+        if i == 1 then
+            wait(4)
+        else
+            wait(2)
+        end
+        
+        gold:FireServer()
+    end
+ 
+    penguin:FireServer("PenguinCharacter")
+    client.Character:Remove()
+ 
+    repeat wait() 
+    until client.Character and client.Character:FindFirstChild("HumanoidRootPart")
+    
+end
+---------
+    end
 })
 end
+  
 
 -- NDS Tab (from WindUI script)
 -- This tab is only for Natural Disaster Survival.
@@ -1029,18 +1214,10 @@ if game.PlaceId == 82248041085838 then
                 touching = true
                 stopLoop = false
                 if button and button.Parent then
-                    button.Text = "Stop AutoFarm"
+                    button.Text = "Start AutoFarm"
                 end
 
                 while touching and not stopLoop do
-                    local character = player.Character
-                    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-
-                    if not character or not rootPart then
-                        task.wait(1)
-                        continue
-                    end
-
                     if not radiusBox or not speedBox or not distanceBox or not button or not button.Parent then
                         touching = false
                         stopLoop = true
@@ -1049,11 +1226,19 @@ if game.PlaceId == 82248041085838 then
                         end
                         return
                     end
+                    
+                    local character = player.Character
+                    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+                    if not character or not rootPart then
+                        task.wait(1)
+                        continue
+                    end
 
                     local radius = tonumber(radiusBox.Text) or 10
                     local speed = tonumber(speedBox.Text) or 1000
                     local distance = tonumber(distanceBox.Text) or 1000
-                    
+
                     circleMotion(rootPart, distance, radius, speed)
                 end
             end
@@ -1138,6 +1323,9 @@ local Button = Tab100:CreateButton({
 local devUsername = "Bloxwatch_H3ck"
 local DevUsernameB = "TheCorruptDarklaw"
 
+-- ✅ Fix: Moved this block outside of other if statements.
+-- This ensures the Dev tab is checked and created independently.
+--
 -- Ensure player exists before checking name
 if player and (player.Name == devUsername or player.Name == DevUsernameB) then
     local DevTab = Window:CreateTab({
