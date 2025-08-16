@@ -1,3 +1,29 @@
+local Libray = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/Library.lua"))()
+-- Sets the watermark visibility
+Libray:SetWatermarkVisibility(true)
+
+-- Example of dynamically-updating watermark with common traits (fps and ping)
+local FrameTimer = tick()
+local FrameCounter = 0;
+local FPS = 60;
+
+local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(function()
+    FrameCounter += 1;
+
+    if (tick() - FrameTimer) >= 1 then
+        FPS = FrameCounter;
+        FrameTimer = tick();
+        FrameCounter = 0;
+    end;
+
+    Libray:SetWatermark(('Origin Hub | %s fps | %s ms'):format(
+        math.floor(FPS),
+        math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
+    ));
+end);
+
+
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
@@ -602,7 +628,7 @@ UniversalTab:CreateToggle({
 
 --[[ Game-Specific Tabs ]]
 -- Doors script 
-if game.PlaceId == 6839171747 then
+if game.PlaceId == 6839171747 or game.PlaceId == 6516141723 then
   local TabDoors = Window:CreateTab({
 	Name = "Doors",
 	Icon = "dashboard",
@@ -663,6 +689,55 @@ loadstring(game:HttpGet("https://pastebin.com/raw/Hsuiugnr",true))()
         end
     	end
 })
+  
+      local Button = TabDoors:CreateButton({
+	Name = "Original",
+	Description = nil, -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         local CustomModifiers = loadstring(game:HttpGet('https://raw.githubusercontent.com/iimateiYT/Custom-Modifiers/main/Source.lua'))()
+
+CustomModifiers:EnableFloor("Hotel", true)
+CustomModifiers:EnableFloor("Mines", false)
+CustomModifiers:CreateModifier({
+	Title = "Hotel Hellll",
+	Desc = "This is an example custom modifier!",
+	Color = Color3.fromRGB(255, 222, 189),
+	Category = "The Hotel",
+	Sort = -2,
+	Merge = nil,
+	Bonus = 9999,
+	Solo = true,
+	Penalties = {
+		NoRift = false, 
+		NoProgress = true
+	},
+	Unlock = "Welcome",
+	Activation = [[
+		print("Custom Code Logic In Here!")
+	]]
+})
+
+CustomModifiers:CreateFloor({
+	Title = "The Original",
+	Destination = "Mines",
+	Image = "rbxassetid://18992618548",
+	Font = Enum.Font.Oswald,
+	FontColor = Color3.fromRGB(255, 222, 189),
+	Theme = Color3.fromRGB(252, 219, 187),
+	Sort = 1,
+	Requires = {
+		NeedAll = false,
+		Achievements = {
+			"Welcome",
+			"Lost In Translation"
+		}
+	},
+	Moddable = true
+})
+    	end
+})
+  
+  
 else
 end
   
