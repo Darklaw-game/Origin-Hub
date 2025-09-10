@@ -433,10 +433,7 @@ CreateNotification()
 -- ================================================================
 -- This section is the original Luna script from WINDTEST (4).lua
 -- The tabs and buttons from the WindUI script will be added to this window.
-local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()  
-
-local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
-
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 -- ================================================================
 -- GLOBAL VARIABLE DECLARATIONS
 -- These are now declared at the top so they can be accessed anywhere.
@@ -473,11 +470,7 @@ local Window = Luna:CreateWindow({
 })
 
 --[[ Home Tab ]]--
-Window:CreateHomeTab({
-    SupportedExecutors = {"Solara", "Xeno", "Delta", "Wave", "Zenith", "Volcano", "Velocity", "Swift", "Potassium", "Seliware", "Bunni", "Sirhurt", "Hydrogen", "Macsploit", "FrostWare", "Illusion", "Codex", "Cryptic", "Arceus X", "Vega X", "Drift", "Krnl", "LX63", "Ronix", "Valex", "Delta"},
-    DiscordInvite = "JuWhEVGyZR",
-    Icon = 1,
-})
+
 
 -- ================================================================
 -- ADDED TABS FROM WINDUI SCRIPT
