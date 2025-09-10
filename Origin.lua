@@ -433,12 +433,9 @@ CreateNotification()
 -- ================================================================
 -- This section is the original Luna script from WINDTEST (4).lua
 -- The tabs and buttons from the WindUI script will be added to this window.
-local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/10cxm/Luna-Interface-Suite-Backup/refs/heads/main/source.lua",true))()
--- Check if the Luna UI loaded successfully.
-if not Luna then
-    warn("Failed to load Luna UI script. The script will not run.")
-    return
-end
+local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()  
+
+local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
 
 -- ================================================================
 -- GLOBAL VARIABLE DECLARATIONS
